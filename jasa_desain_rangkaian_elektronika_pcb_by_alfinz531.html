@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasa Desain Rangkaian | EasyEDA Single Layer & Through-Hole</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono untuk nuansa teknis -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Konfigurasi Tailwind untuk warna kustom bernuansa PCB -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        pcb: {
+                            dark: '#040d0a',      // Hitam kehijauan sangat gelap
+                            board: '#091c16',     // Hijau solder mask gelap
+                            card: '#0d261e',      // Warna kartu komponen
+                            border: '#184234',    // Garis border hijau tembaga redup
+                            emerald: '#10b981',   // Hijau menyala
+                            copper: '#f59e0b',    // Aksen tembaga / emas (pad PCB)
+                            cyan: '#06b6d4',      // Aksen biru EasyEDA / cyan
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-pcb-dark text-slate-100 font-sans antialiased selection:bg-pcb-emerald selection:text-pcb-dark min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Background Pola Jalur PCB Halus (Inline SVG Pattern) -->
+    <div class="fixed inset-0 z-0 pointer-events-none opacity-15" style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2310b981' stroke-width='1'%3E%3Cpath d='M10 10 L30 10 L40 20 L80 20'/%3E%3Ccircle cx='10' cy='10' r='2.5' fill='%23f59e0b' stroke='none'/%3E%3Ccircle cx='80' cy='20' r='2.5' fill='%2310b981' stroke='none'/%3E%3Cpath d='M20 90 L20 60 L35 45 L70 45 L85 60 L85 90'/%3E%3Ccircle cx='20' cy='90' r='2.5' fill='%2306b6d4' stroke='none'/%3E%3Ccircle cx='85' cy='90' r='2.5' fill='%23f59e0b' stroke='none'/%3E%3Cpath d='M0 50 L15 50 L25 40'/%3E%3Ccircle cx='25' cy='40' r='2' fill='%2310b981' stroke='none'/%3E%3C/g%3E%3C/svg%3E&quot;);"></div>
+
+    <!-- Efek Cahaya Ambient di Atas -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-pcb-emerald/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+    <!-- =====================================================================
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-3 leading-tight">
+            Jasa Desain <span class="text-transparent bg-clip-text bg-gradient-to-r from-pcb-emerald via-teal-300 to-pcb-cyan">Rangkaian</span>
+        </h1>
+
+        <!-- Identitas Pembuat / Brand -->
+        <div class="mb-6">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-pcb-board/90 border border-pcb-emerald/35 text-xs sm:text-sm font-mono font-semibold text-pcb-emerald shadow-inner">
+                <span class="text-slate-400 font-normal">by</span>
+                <span class="tracking-wide">@alfinz531</span>
+            </span>
+        </div>
+
+        <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+            Layanan joki & pembuatan skematik serta layout PCB presisi untuk tugas sekolah, kuliah, maupun proyek elektronika DIY. Dikerjakan eksklusif menggunakan <span class="text-pcb-cyan font-bold">EasyEDA</span>, khusus <span class="text-pcb-copper font-semibold">Single Layer (1 Lapis)</span> dan komponen biasa <span class="text-pcb-emerald font-semibold">Through-Hole / DIP (non-SMD)</span>.
+        </p>
+
+        <!-- Badge Spesifikasi & Output File -->
+        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs font-mono text-slate-300">
+            <span class="px-3 py-1.5 rounded-md bg-pcb-cyan/15 text-pcb-cyan border border-pcb-cyan/40 font-semibold">Software: EasyEDA</span>
+            <span class="px-3 py-1.5 rounded-md bg-pcb-copper/15 text-pcb-copper border border-pcb-copper/40 font-semibold">PCB Single Layer (1 Lapis)</span>
+            <span class="px-3 py-1.5 rounded-md bg-pcb-emerald/15 text-pcb-emerald border border-pcb-emerald/40 font-semibold">Through-Hole / DIP (Bukan SMD)</span>
+            <span class="px-3 py-1.5 rounded-md bg-pcb-board border border-pcb-border">File .json & Gerber</span>
+            <span class="px-3 py-1.5 rounded-md bg-pcb-board border border-pcb-border">PDF Mirror 1:1 Siap Etching</span>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         BAGIAN UTAMA: 3 MENU LAYANAN & PRICELIST DI TENGAH
+         ===================================================================== -->
+    <main id="layanan" class="relative z-10 flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 w-full">
+        
+        <div class="text-center mb-10">
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Pilih Paket Layanan & Pricelist</h2>
+            <p class="text-slate-400 text-sm mt-1">Khusus rangkaian komponen kaki tembus (Through-Hole) & jalur PCB 1 lapis</p>
+        </div>
+
+        <!-- Grid 3 Kartu Menu -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+
+            <!-- MENU 1: Jasa Desain Skematik -->
+            <div class="bg-pcb-card/90 backdrop-blur-sm border border-pcb-border hover:border-pcb-cyan/60 rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-pcb-cyan/10 border border-pcb-cyan/30 flex items-center justify-center text-pcb-cyan">
+                            <!-- Icon Skematik -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono uppercase tracking-wider px-2.5 py-1 rounded bg-pcb-board text-pcb-cyan border border-pcb-cyan/20">
+                            Menu 01
+                        </span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-white mb-2">Jasa Desain Skematik</h3>
+                    <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+                        Pembuatan diagram skematik rapi dari coretan tangan atau referensi rangkaian di <span class="text-slate-200 font-medium">EasyEDA</span> dengan simbol komponen standar/Through-Hole.
+                    </p>
+
+                    <!-- Pricelist -->
+                    <div class="bg-pcb-board/90 border border-pcb-border rounded-xl p-4 mb-6">
+                        <span class="text-xs text-slate-400 block mb-1">Rentang Harga</span>
+                        <div class="font-mono text-2xl sm:text-3xl font-bold text-pcb-cyan">
+                            Rp 5k <span class="text-base font-normal text-slate-400">-</span> 20k
+                        </div>
+                        <span class="text-xs text-slate-400 font-mono">(Rp 5.000 - Rp 20.000)</span>
+                    </div>
+
+                    <!-- Deliverables Menu 1 -->
+                    <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-cyan shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>File project asli <strong>EasyEDA (.json)</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-cyan shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Simbol komponen <strong>standar / Through-Hole (non-SMD)</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-cyan shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Ekspor <strong>PDF & PNG resolusi tinggi</strong> untuk laporan</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-cyan shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Pengecekan <strong>ERC (Electrical Rule Check)</strong> bebas error</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <button onclick="openOrderModal('Jasa Desain Skematik', 'Rp 5.000 - Rp 20.000')" class="w-full py-3.5 px-4 rounded-xl bg-pcb-board hover:bg-pcb-cyan text-white hover:text-pcb-dark font-semibold border border-pcb-cyan/50 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer">
+                    <span>Pesan Skematik</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+            </div>
+
+            <!-- MENU 2: Jasa Desain Layout -->
+            <div class="bg-pcb-card/90 backdrop-blur-sm border border-pcb-border hover:border-pcb-copper/60 rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-pcb-copper/10 border border-pcb-copper/30 flex items-center justify-center text-pcb-copper">
+                            <!-- Icon Routing PCB -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono uppercase tracking-wider px-2.5 py-1 rounded bg-pcb-board text-pcb-copper border border-pcb-copper/20">
+                            Menu 02
+                        </span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-white mb-2">Jasa Desain Layout</h3>
+                    <p class="text-slate-400 text-sm mb-5 leading-relaxed">
+                        Routing jalur PCB khusus <span class="text-slate-200 font-medium">Single Layer (1 lapis tembaga)</span> untuk komponen biasa / <span class="text-slate-200 font-medium">Through-Hole (DIP)</span>, mudah disolder & dilarutkan sendiri.
+                    </p>
+
+                    <!-- Pricelist -->
+                    <div class="bg-pcb-board/90 border border-pcb-border rounded-xl p-4 mb-6">
+                        <span class="text-xs text-slate-400 block mb-1">Rentang Harga</span>
+                        <div class="font-mono text-2xl sm:text-3xl font-bold text-pcb-copper">
+                            Rp 10k <span class="text-base font-normal text-slate-400">-</span> 35k
+                        </div>
+                        <span class="text-xs text-slate-400 font-mono">(Rp 10.000 - Rp 35.000)</span>
+                    </div>
+
+                    <!-- Deliverables Menu 2 -->
+                    <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-copper shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Khusus <strong>PCB Single Layer (1 lapis)</strong> & komponen <strong>Through-Hole / DIP</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-copper shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Siap sablon / setrika / etching (<strong>Mirror PDF 1:1</strong>)</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-copper shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>File project <strong>EasyEDA (.json)</strong> & <strong>Gerber (.zip)</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-copper shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Jalur tebal & pad lega (aman untuk bor & solder manual)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <button onclick="openOrderModal('Jasa Desain Layout', 'Rp 10.000 - Rp 35.000')" class="w-full py-3.5 px-4 rounded-xl bg-pcb-board hover:bg-pcb-copper text-white hover:text-pcb-dark font-semibold border border-pcb-copper/50 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer">
+                    <span>Pesan Layout PCB</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+            </div>
+
+            <!-- MENU 3: Jasa Desain Skema dan Layout (POPULER) -->
+            <div class="bg-gradient-to-b from-[#113328] to-pcb-card border-2 border-pcb-emerald rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-2xl shadow-pcb-emerald/15 relative">
+                
+                <!-- Badge Populer -->
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-pcb-emerald text-pcb-dark text-xs font-extrabold uppercase tracking-wider px-4 py-1 rounded-full shadow-md whitespace-nowrap">
+                    ★ Paket Lengkap Single Layer
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-4 mt-1">
+                        <div class="w-12 h-12 rounded-xl bg-pcb-emerald/20 border border-pcb-emerald/50 flex items-center justify-center text-pcb-emerald">
+                            <!-- Icon Full Stack Hardware -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono uppercase tracking-wider px-2.5 py-1 rounded bg-pcb-emerald/15 text-pcb-emerald border border-pcb-emerald/30">
+                            Menu 03
+                        </span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-white mb-2">Jasa Desain Skema dan Layout</h3>
+                    <p class="text-slate-300 text-sm mb-5 leading-relaxed">
+                        Paket terima beres dari nol! Pembuatan skematik + layout PCB <span class="text-white font-semibold">Single Layer</span> khusus komponen <span class="text-white font-semibold">non-SMD (Through-Hole)</span> di EasyEDA.
+                    </p>
+
+                    <!-- Pricelist -->
+                    <div class="bg-pcb-dark/70 border border-pcb-emerald/40 rounded-xl p-4 mb-6">
+                        <span class="text-xs text-pcb-emerald block mb-1">Rentang Harga Bundling</span>
+                        <div class="font-mono text-2xl sm:text-3xl font-bold text-white">
+                            Rp 25k <span class="text-base font-normal text-slate-400">-</span> 50k
+                        </div>
+                        <span class="text-xs text-slate-300 font-mono">(Rp 25.000 - Rp 50.000)</span>
+                    </div>
+
+                    <!-- Deliverables Menu 3 -->
+                    <ul class="space-y-3 text-sm text-slate-200 mb-8">
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-emerald shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span><strong>Skematik + Layout PCB Single Layer</strong> (komponen Through-Hole)</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-emerald shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>File <strong>EasyEDA (.json)</strong> + <strong>PDF Siap Cetak / Etching (Mirror 1:1)</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-emerald shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span><strong>Gerber (.zip)</strong>, daftar komponen (<strong>BOM</strong>) & <strong>Preview 2D/3D</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-pcb-emerald shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Optimasi jalur bawah (Bottom Layer) minim jumper</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <button onclick="openOrderModal('Jasa Desain Skema dan Layout', 'Rp 25.000 - Rp 50.000')" class="w-full py-3.5 px-4 rounded-xl bg-pcb-emerald hover:bg-emerald-400 text-pcb-dark font-bold shadow-lg shadow-pcb-emerald/25 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer">
+                    <span>Pesan Skema + Layout</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- =====================================================================
+             CATATAN PENTING DI BAWAH KARTU PRICELIST
+             ===================================================================== -->
+        <div class="mt-8 bg-amber-950/35 border border-pcb-copper/50 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 shadow-lg">
+            <div class="w-10 h-10 rounded-xl bg-pcb-copper/20 text-pcb-copper flex items-center justify-center shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-sm sm:text-base font-semibold text-amber-200 leading-relaxed">
+                    Harga bervariasi tergantung tingkat kesulitan dan banyaknya komponen. Layanan dikerjakan eksklusif menggunakan EasyEDA, khusus desain PCB Single Layer (1 lapis) dan komponen biasa/Through-Hole (bukan SMD).
+                </p>
+            </div>
+        </div>
+
+        <!-- =====================================================================
+             FITUR INTERAKTIF: KALKULATOR SIMULASI ESTIMASI HARGA
+             ===================================================================== -->
+        <section id="kalkulator" class="mt-14 bg-pcb-board/90 border border-pcb-border rounded-2xl p-6 sm:p-8 shadow-xl">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-pcb-border">
+                <div>
+                    <span class="text-xs font-mono text-pcb-emerald uppercase tracking-wider">Simulasi Biaya • EasyEDA Single Layer</span>
+                    <h3 class="text-xl font-bold text-white mt-0.5">Cek Perkiraan Harga Rangkaian Anda</h3>
+                </div>
+                <p class="text-xs text-slate-400 max-w-md">
+                    Simulasi khusus komponen biasa (Through-Hole / DIP) dengan jalur PCB 1 lapis (Single Layer).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+                <!-- Pilihan Paket -->
+                <div>
+                    <label for="calc-service" class="block text-xs font-medium text-slate-300 mb-2">1. Pilih Jenis Layanan</label>
+                    <select id="calc-service" onchange="calculateEstimate()" class="w-full bg-pcb-dark border border-pcb-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-pcb-emerald">
+                        <option value="skematik">Menu 1: Jasa Desain Skematik (5k - 20k)</option>
+                        <option value="layout">Menu 2: Jasa Desain Layout (10k - 35k)</option>
+                        <option value="lengkap" selected>Menu 3: Jasa Desain Skema & Layout (25k - 50k)</option>
+                    </select>
+                </div>
+
+                <!-- Pilihan Tingkat Kerumitan & Komponen Through-Hole -->
+                <div>
+                    <label for="calc-complexity" class="block text-xs font-medium text-slate-300 mb-2">2. Banyak Komponen & Kerumitan Jalur</label>
+                    <select id="calc-complexity" onchange="calculateEstimate()" class="w-full bg-pcb-dark border border-pcb-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-pcb-emerald">
+                        <option value="low">Sederhana (&lt; 15 komponen Through-Hole)</option>
+                        <option value="medium" selected>Menengah (15 - 30 komponen + IC DIP)</option>
+                        <option value="high">Kompleks (&gt; 30 komponen / Banyak IC DIP / Padat)</option>
+                    </select>
+                </div>
+
+                <!-- Hasil Estimasi -->
+                <div class="bg-pcb-dark border border-pcb-emerald/40 rounded-xl p-4 flex items-center justify-between gap-2">
+                    <div>
+                        <span class="text-xs text-slate-400 block">Perkiraan Biaya:</span>
+                        <span id="calc-result" class="font-mono text-lg sm:text-xl font-bold text-pcb-emerald">Rp 35.000 - Rp 40.000</span>
+                    </div>
+                    <button onclick="orderFromCalculator()" class="px-4 py-2.5 rounded-lg bg-pcb-emerald hover:bg-emerald-400 text-pcb-dark text-xs font-bold transition-colors cursor-pointer shrink-0">
+                        Ajukan Ini
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =====================================================================
+         FOOTER
+         ===================================================================== -->
+    <footer class="relative z-10 border-t border-pcb-border/60 bg-pcb-dark py-8 px-4 text-center text-xs sm:text-sm text-slate-400">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="font-mono text-slate-300">
+                Jasa Desain Rangkaian <span class="text-pcb-emerald font-bold">by @alfinz531</span> • <span class="text-pcb-cyan">EasyEDA</span> • <span class="text-pcb-copper">Single Layer</span> • <span class="text-slate-200">Through-Hole (Non-SMD)</span>
+            </p>
+            <p>Siap membantu tugas sekolah, kuliah, dan proyek elektronika Anda.</p>
+        </div>
+    </footer>
+
+    <!-- =====================================================================
+         MODAL PEMESANAN CEPAT (OTOMATIS KE WHATSAPP)
+         ===================================================================== -->
+    <div id="orderModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+        <div class="bg-pcb-board border border-pcb-emerald/50 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            
+            <!-- Tombol Close -->
+            <button onclick="closeOrderModal()" aria-label="Tutup form" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-pcb-card text-slate-400 hover:text-white flex items-center justify-center cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="mb-4">
+                <span class="text-xs font-mono text-pcb-cyan uppercase">by @alfinz531 • EasyEDA • Single Layer • Non-SMD</span>
+                <h3 class="text-xl font-bold text-white mt-1">Form Pemesanan Cepat</h3>
+                <p class="text-xs text-slate-400 mt-1">Spesifikasi otomatis terkirim ke WhatsApp untuk konsultasi harga pasti.</p>
+            </div>
+
+            <form id="orderForm" onsubmit="submitToWhatsApp(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Paket Layanan Dipilih</label>
+                    <input type="text" id="modal-package" readonly class="w-full bg-pcb-dark border border-pcb-border rounded-xl px-3.5 py-2.5 text-sm font-semibold text-pcb-emerald focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Rentang / Estimasi Harga</label>
+                    <input type="text" id="modal-price" readonly class="w-full bg-pcb-dark border border-pcb-border rounded-xl px-3.5 py-2.5 text-sm font-mono text-pcb-copper focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Spesifikasi Teknis</label>
+                    <input type="text" id="modal-spec" value="EasyEDA - Single Layer - Komponen Through-Hole/Non-SMD" readonly class="w-full bg-pcb-dark border border-pcb-cyan/40 rounded-xl px-3.5 py-2.5 text-xs font-mono font-semibold text-pcb-cyan focus:outline-none">
+                </div>
+
+                <div>
+                    <label for="modal-components" class="block text-xs font-medium text-slate-300 mb-1">Perkiraan Jumlah Komponen</label>
+                    <input type="text" id="modal-components" placeholder="Misal: ± 20 komponen (resistor, kapasitor, IC DIP)" required class="w-full bg-pcb-dark border border-pcb-border rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pcb-emerald">
+                </div>
+
+                <div>
+                    <label for="modal-notes" class="block text-xs font-medium text-slate-300 mb-1">Deskripsi Rangkaian / Ukuran PCB / Deadline</label>
+                    <textarea id="modal-notes" rows="3" placeholder="Contoh: Rangkaian power supply 12V ke 5V pakai IC 7805 DIP, ukuran PCB max 5x5 cm, butuh besok malam." required class="w-full bg-pcb-dark border border-pcb-border rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pcb-emerald"></textarea>
+                </div>
+
+                <div class="pt-2 flex flex-col gap-2">
+                    <button type="submit" class="w-full py-3 px-4 rounded-xl bg-pcb-emerald hover:bg-emerald-400 text-pcb-dark font-bold text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-pcb-emerald/20">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+                        <span>Kirim Pesanan ke WhatsApp</span>
+                    </button>
+                    <button type="button" onclick="copyOrderText()" id="copyBtn" class="w-full py-2.5 px-4 rounded-xl bg-pcb-card hover:bg-pcb-border text-slate-300 text-xs font-medium transition-colors cursor-pointer">
+                        Salin Format Pesanan (Alternatif)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         JAVASCRIPT MURNI (VANILLA JS) UNTUK INTERAKTIVITAS
+         ===================================================================== -->
+    <script>
+        // GANTI NOMOR WHATSAPP DI BAWAH INI DENGAN NOMOR ANDA (Format: 628xxx tanpa + atau 0 di depan)
+        const ADMIN_WHATSAPP_NUMBER = "6281234567890";
+
+        // 1. Fungsi Kalkulator Estimasi Harga
+        function calculateEstimate() {
+            const service = document.getElementById('calc-service').value;
+            const complexity = document.getElementById('calc-complexity').value;
+            const resultEl = document.getElementById('calc-result');
+
+            // Matriks harga sesuai rentang:
+            // Skematik: 5k - 20k | Layout: 10k - 35k | Lengkap: 25k - 50k
+            const priceTable = {
+                skematik: { low: "Rp 5.000 - Rp 8.000", medium: "Rp 10.000 - Rp 15.000", high: "Rp 15.000 - Rp 20.000" },
+                layout:   { low: "Rp 10.000 - Rp 15.000", medium: "Rp 20.000 - Rp 25.000", high: "Rp 25.000 - Rp 35.000" },
+                lengkap:  { low: "Rp 25.000 - Rp 30.000", medium: "Rp 35.000 - Rp 40.000", high: "Rp 40.000 - Rp 50.000" }
+            };
+
+            resultEl.textContent = priceTable[service][complexity];
+        }
+
+        // 2. Mengirim hasil kalkulator langsung ke modal pemesanan
+        function orderFromCalculator() {
+            const serviceSelect = document.getElementById('calc-service');
+            const serviceNames = {
+                skematik: 'Jasa Desain Skematik',
+                layout: 'Jasa Desain Layout',
+                lengkap: 'Jasa Desain Skema dan Layout'
+            };
+            const serviceName = serviceNames[serviceSelect.value];
+            const estimatedPrice = document.getElementById('calc-result').textContent;
+            
+            const complexitySelect = document.getElementById('calc-complexity');
+            const complexityText = complexitySelect.options[complexitySelect.selectedIndex].text;
+
+            openOrderModal(serviceName, estimatedPrice);
+            document.getElementById('modal-components').value = complexityText;
+        }
+
+        // 3. Kontrol Buka & Tutup Modal Pemesanan
+        const orderModal = document.getElementById('orderModal');
+
+        function openOrderModal(packageName, priceRange) {
+            document.getElementById('modal-package').value = packageName;
+            document.getElementById('modal-price').value = priceRange;
+            orderModal.classList.remove('hidden');
+            orderModal.classList.add('flex');
+        }
+
+        function closeOrderModal() {
+            orderModal.classList.add('hidden');
+            orderModal.classList.remove('flex');
+        }
+
+        // Tutup modal jika klik di luar kotak dialog
+        orderModal.addEventListener('click', function(e) {
+            if (e.target === orderModal) {
+                closeOrderModal();
+            }
+        });
+
+        // 4. Membuat teks pesan pesanan WhatsApp
+        function buildOrderMessage() {
+            const pkg = document.getElementById('modal-package').value;
+            const price = document.getElementById('modal-price').value;
+            const spec = document.getElementById('modal-spec').value;
+            const components = document.getElementById('modal-components').value || "Belum dihitung";
+            const notes = document.getElementById('modal-notes').value || "-";
+
+            return `Halo *@alfinz531*, saya ingin memesan *Jasa Desain Rangkaian*:\n\n` +
+                   `• *Paket:* ${pkg}\n` +
+                   `• *Kisaran Harga:* ${price}\n` +
+                   `• *Spesifikasi:* ${spec}\n` +
+                   `• *Perkiraan Komponen:* ${components}\n` +
+                   `• *Catatan/Deskripsi:* ${notes}\n\n` +
+                   `Mohon info lanjut untuk pengiriman sketsa/referensi rangkaiannya. Terima kasih!`;
+        }
+
+        // 5. Submit ke WhatsApp
+        function submitToWhatsApp(event) {
+            event.preventDefault();
+            const message = buildOrderMessage();
+            const encodedMessage = encodeURIComponent(message);
+            const waUrl = `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            window.open(waUrl, '_blank');
+        }
+
+        // 6. Salin Teks Pesanan ke Clipboard
+        function copyOrderText() {
+            const message = buildOrderMessage();
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = message;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextArea);
+
+            const copyBtn = document.getElementById('copyBtn');
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = "✓ Format Pesanan Berhasil Disalin!";
+            copyBtn.classList.add("text-pcb-emerald");
+            
+            setTimeout(() => {
+                copyBtn.textContent = originalText;
+                copyBtn.classList.remove("text-pcb-emerald");
+            }, 2500);
+        }
+
+        // Inisialisasi nilai kalkulator saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', calculateEstimate);
+    </script>
+</body>
+</html>
